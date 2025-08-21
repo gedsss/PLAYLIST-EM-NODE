@@ -36,6 +36,7 @@ function mostrarPartidas() {
 
 partidas();
 
+
 // Exercicio provas
 
 let gabarito = []
@@ -134,13 +135,21 @@ let cadeiras = ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'B10']
 const reserCadeiras = () => {
     console.log(`Cadeiras disponíveis: ${cadeiras.join(' ')}`)
     readline.question('Deseja reservar unma cadeira? S/N ', (afirm) => {
+        if(afirm.toUpperCase() != 'S' && afirm.toUpperCase() != 'N'){
+            console.log('Digite uma opção válida!')
+            console.log('-'.repeat(30))
+            reserCadeiras()
+        }
+
+        else{
         if(afirm.toUpperCase() === 'S'){
-            readline.question('Digite o número da cadeira que deseja reservar: (1-10)', (num) => {
+            readline.question('Digite o número da cadeira que deseja reservar: (1-10) ', (num) => {
                 let idx = parseInt(num) - 1
                 if (idx >= 0 && idx < cadeiras.length){
                     if(cadeiras[idx] != 'X'){
                         cadeiras[idx] = 'X'
                         console.log('Cadeira reservada com sucesso!!')
+                        confirmReserva()
                     } else {
                         console.log('Digite uma cadeira vaga!!')
                         reserCadeiras()
@@ -155,7 +164,22 @@ const reserCadeiras = () => {
             console.log('Saindo...')
             readline.close()
         }
+    }
     })
 }
 
+
+const confirmReserva = () => {
+    readline.question('Deseja reservar outra cadeira? [S/N] ', (confirm) => {
+        if(confirm != 'S' && confirm != 'N'){
+            console.log('Digite uma opção válida!')
+            confirmReserva()
+        } if(confirm === 'S'){
+            reserCadeiras()
+        } else {
+            console.log('Saindo...')
+            readline.close()
+        }
+    })
+}
 reserCadeiras()

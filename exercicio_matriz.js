@@ -47,29 +47,27 @@ function jogada(jogador, callback) {
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
         if (matriz[i][j] === escolha) {
-          matriz[i][j] = jogador;
-          jogadaValida = true;
+          matriz[i][j] = jogador
+          jogadaValida = true
         }
       }
     }
 
     if (!jogadaValida) {
-      console.log("Jogada inválida!");
-      return jogada(jogador, callback);
+      console.log("Jogada inválida!")
+      return jogada(jogador, callback)
     }
 
     if (verificarVitoria(jogador)) {
       imprimirMatriz();
-      console.log(`Jogador ${jogador} venceu!`);
-      readline.close();
-      process.exit();
+      console.log(`Jogador ${jogador} venceu!`)
+      readline.close()
     }
 
     if (verificarEmpate()) {
-      imprimirMatriz();
-      console.log("Empate!");
-      readline.close();
-      process.exit();
+      imprimirMatriz()
+      console.log("Empate!")
+      readline.close()
     }
 
     callback();

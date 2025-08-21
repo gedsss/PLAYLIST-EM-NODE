@@ -8,7 +8,7 @@ const perguntarNumeros = (callback) => {
         redline.question('Digite o segundo número: ', (n2) => {
             if(isNaN(n1) || isNaN(n2)){
                 console.log('Por favor digite um número válido')
-                perguntarNumeros(callback)
+                return perguntarNumeros(callback)
             } else {
                 callback(Number(n1), Number(n2))
             }
@@ -22,7 +22,7 @@ perguntarNumeros((n1, n2) => {
             console.log(i)
         }
     } if (n2 < n1){
-        for(let i = n1; i => n2; i--) {
+        for(let i = n1; i >= n2; i--) {
             console.log(i)
         }
     }
@@ -35,7 +35,7 @@ const checarNotas = () => {
     redline.question('Digite a quantidade de alunos na turma: ', (quant) => {
         if (isNaN(quant) || quant <= 0) {
             console.log('Digite um número válido!');
-            checarNotas();
+            return checarNotas();
         } else {
             cadastroAluno(Number(quant));
         }
@@ -50,9 +50,10 @@ const cadastroAluno = (quant) => {
         if (i < quant) {
             redline.question('Digite o nome de um aluno: ', (nome) => {
                 redline.question('Digite a nota do aluno: ', (nota) => {
-                    if (isNaN(nota)) {
+                    const numNota = Number(nota)
+                    if (isNaN(numNota)) {
                         console.log('Digite uma nota válida!!');
-                        perguntarDados();
+                        return perguntarDados();
                     } else {
                         alunos.push({ nome, nota: Number(nota) });
                         i++;
@@ -89,13 +90,26 @@ const contagem = (sexo, idade, cor) => {
 const contagemPessoas = () => {
 
     redline.question('Digite o sexo: [M/F]', (sexo) => {
+        if(sexo.toUpperCase() != 'M' && sexo.toUpperCase() != 'F'){
+            console.log('Digite uma opção válida!')
+            return contagemPessoas()
+        }
         redline.question('Digite a idade: ', (idade) => {
-            redline.question('Digite a cor do cabelo: ', (cor) => {
-                contagem(sexo, idade, cor)
+            const numIdade = Number(idade)
+            if(isNaN(numIdade)){
+                console.log('Digite uma idade válida!')
+                return contagemPessoas()
+            }
+            redline.question('Digite a cor do cabelo: [Preto | Castanho | Loiro | Ruivo]', (cor) => {
+                if(cor != 'Preto' && cor != 'Castanho' && cor != 'Loiro' && cor != 'Ruivo'){
+                    console.log('Digite uma cor válida!')
+                    return contagemPessoas()
+                }
+                contagem(sexo.toUpperCase(), numIdade, cor)
                 console.log('Digite 1 para adicionar outra pessoa')
                 console.log('Digite 2 para sair')
                 redline.question('Digite uma das opções [1/2]', (escolha) => {
-                    if(escolha === 1){
+                    if(escolha === '1'){
                         contagemPessoas()
                     } else {
                         console.log(h)

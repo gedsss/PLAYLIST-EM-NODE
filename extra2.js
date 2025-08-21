@@ -9,13 +9,29 @@ let preco = [];
 
 const adcEstoque = () => {
     readline.question('Digite o nome do produto: ', (nome) => {
+        if(!isNaN(nome)){
+            console.log('Digite um nome válido!')
+            return adcEstoque()
+        }
         readline.question('Digite a quantidade do produto a ser adicionado: ', (quant) => {
+            if(isNaN(quant)){
+                console.log('Digite uma quantidade válida!')
+                return adcEstoque()
+            }
             readline.question('Digite o preço do produto a ser adicionado: ', (val) => {
+                if(isNaN(val)){
+                    console.log('Digite um valor válido!')
+                    return adcEstoque()
+                }
                 produto.push(nome);
                 estoque.push(parseInt(quant));
                 preco.push(parseFloat(val));
 
                 readline.question('Deseja adicionar outro item? [S/N] ', (opcao) => {
+                    if(opcao.toUpperCase() != 'S' && opcao.toUpperCase() != 'N'){
+                        console.log('Digite uma opção válida!')
+                        adcEstoque()
+                    }
                     if (opcao.toUpperCase() === 'S') {
                         adcEstoque();
                     } else {
@@ -43,6 +59,10 @@ const compra = () => {
                         valor_final += valor;
 
                         readline.question('Deseja comprar outro item? [S/N] ', (item) => {
+                            if(item.toUpperCase() != 'S' && item.toUpperCase() != 'N'){
+                            console.log('Digite uma opção válida!')
+                            comprarItem()
+                             }
                             if (item.toUpperCase() === 'S') {
                                 comprarItem();
                             } else {
@@ -83,7 +103,7 @@ const formaPagamento = (valor_final) => {
                 break;
             default:
                 console.log('Opção inválida!');
-                return formaPagamento(valor_final);
+                formaPagamento(valor_final)
         }
         menu();
     });
